@@ -104,22 +104,25 @@ class RoversController extends Component {
     }
 
     moveRover() {
+      let nRover = Object.assign({}, this.state.Rover);
       for (var i =0; i < this._instructions.value.length; i++){
-             this.followInstruction( this._instructions.value.charAt(i));
+             nRover = this.followInstruction(nRover, this._instructions.value.charAt(i));
       }
+
+      console.log("After Updating" + nRover.Position.xCoordinate + nRover.Position.yCoordinate + nRover.Position.yCoordinate)
     }
 
-    followInstruction(instructionCode){
-      let nRover = Object.assign({}, this.state.Rover);
+    followInstruction(nRover, instructionCode){
+      
       if (instructionCode === 'L')
           {
             this.turnLeft(nRover);
           }
-      if (instructionCode === 'R')
+      else if (instructionCode === 'R')
            { 
              nRover =  this.turnRight(nRover)
            }
-      if (instructionCode === 'M')
+      else if (instructionCode === 'M')
            {
                this.move(nRover);
            }
@@ -130,32 +133,27 @@ class RoversController extends Component {
       
       if (nRover.Position.head === 'N')
         nRover.Position.head = 'W';
-      if (nRover.Position.head === 'W')
+      else if (nRover.Position.head === 'W')
         nRover.Position.head = 'S';
-      if (nRover.Position.head === 'S')
+      else if (nRover.Position.head === 'S')
         nRover.Position.head = 'E';
-      if (nRover.Position.head === 'E')
+      else if (nRover.Position.head === 'E')
         nRover.Position.head = 'N';
+
       
-      this.setState(prevState => ({
-        Rover: {
-                ...prevState.Rover.Position,
-                head: nRover.position.head
-               }
-            }
-        ));s
-        console.log('After turning left state rover objects head is' + this.state.Rover.Position.head);
+      console.log('After turning left state rover objects head is' + this.state.Rover.Position.head);
+      return nRover;
     }
 
 
     turnRight(nRover){
       if (this.state.Rover.head === 'N')
         nRover.head = 'E';
-      if (this.state.Rover.head === 'E')
+      else if (this.state.Rover.head === 'E')
         nRover.head = 'S';
-      if (this.state.Rover.head === 'S')
+      else if (this.state.Rover.head === 'S')
         nRover.head = 'W';
-      if (this.state.Rover.head === 'W')
+      else if (this.state.Rover.head === 'W')
         nRover.head = 'N';
       //this.setState({ Rover: nRover });
       return nRover;
@@ -173,20 +171,17 @@ class RoversController extends Component {
         nRover.Position.yCoordinate ++;
         console.log('moving north, current position y:' + nRover.Position.yCoordinate);
       }
-      if (nRover.Position.head === 'E')
+      else if (nRover.Position.head === 'E')
       {
         nRover.Position.xCoordinate ++;
         console.log('moving east, current position x:' + nRover.Position.xCoordinate);
       }
-      if (nRover.Position.head === 'W')
+      else if (nRover.Position.head === 'W')
       {
         nRover.Position.xCoordinate --;
         console.log('moving west, current position x:' + nRover.Position.xCoordinate);
       }
-      
-      console.log('New Rover position:' + nRover.Position.xCoordinate + nRover.Position.yCoordinate + nRover.Position.head);
-      this.setState({ Rover: nRover });
-
+      return nRover;
     }
 
     render(){
