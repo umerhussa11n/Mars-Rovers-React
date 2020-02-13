@@ -1,0 +1,8 @@
+  .RoversController-form {
+    padding: 50px;
+    background-color: green;
+    position: absolute;
+    left: 50%;
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+  }
